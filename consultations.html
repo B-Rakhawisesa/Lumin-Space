@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Consultations – Lumin Space</title>
+  <meta name="description"
+    content="Book a certified architect or interior designer through Lumin Space. Tailored consultations for smart homes, minimalist spaces, and architectural renovations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="js/components.js"></script>
+</head>
+
+<body>
+
+  <!-- Booking Confirmation Modal -->
+  <div id="booking-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="bm-title"
+    aria-modal="true">
+    <div class="modal-box modal-box--confirm">
+      <div class="confirm-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3892d1" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22 4 12 14.01 9 11.01" />
+        </svg>
+      </div>
+      <h2 id="bm-title">Booking Confirmed!</h2>
+      <p id="bm-details"></p>
+      <p class="bm-note">A calendar invite and preparation guide will be emailed to you shortly.</p>
+      <button class="btn btn-primary" id="bm-close">Done</button>
+    </div>
+  </div>
+
+  <main class="consultations-page">
+    <!-- ══════════════════════════
+       PAGE HEADER
+  ══════════════════════════ -->
+    <section class="page-hero" aria-label="Consultations header">
+      <div class="section-container">
+        <div class="page-hero__inner">
+          <div>
+            <span class="section-label">Expert Network</span>
+            <h1 class="page-hero__title">Design Consultations</h1>
+            <p class="page-hero__sub">Connect with certified architects and interior designers who specialise in smart,
+              intentional living spaces.</p>
+          </div>
+          <div class="page-hero__breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span aria-hidden="true">›</span>
+            <span aria-current="page">Consultations</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════
+       HOW CONSULTATIONS WORK
+  ══════════════════════════ -->
+    <section class="how-consult" aria-label="How consultations work">
+      <div class="section-container">
+        <div class="consult-steps">
+          <div class="consult-step">
+            <div class="consult-step__num" aria-hidden="true">01</div>
+            <h3>Choose an Expert</h3>
+            <p>Browse profiles, specialties, and reviews. Filter by style or focus area.</p>
+          </div>
+          <div class="consult-step__line" aria-hidden="true"></div>
+          <div class="consult-step">
+            <div class="consult-step__num" aria-hidden="true">02</div>
+            <h3>Pick a Slot</h3>
+            <p>Select a date and time directly in the expert's live availability calendar.</p>
+          </div>
+          <div class="consult-step__line" aria-hidden="true"></div>
+          <div class="consult-step">
+            <div class="consult-step__num" aria-hidden="true">03</div>
+            <h3>Transform Your Space</h3>
+            <p>Meet via video call or in-person. Receive a detailed design brief to act on.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════
+       FILTER TABS
+  ══════════════════════════ -->
+    <section class="consultations-section" id="consultations" aria-label="Expert consultants">
+      <div class="section-container">
+        <div class="service-tabs" role="tablist" aria-label="Filter experts by specialty" id="expert-tabs">
+          <button class="service-tab active" data-filter="all" role="tab" aria-selected="true">All Experts</button>
+          <button class="service-tab" data-filter="architect" role="tab" aria-selected="false">Architects</button>
+          <button class="service-tab" data-filter="interior" role="tab" aria-selected="false">Interior Design</button>
+          <button class="service-tab" data-filter="smart" role="tab" aria-selected="false">Smart Homes</button>
+        </div>
+
+        <!-- ══════ PROFILES GRID ══════ -->
+        <div class="profiles-grid" id="profiles-panel" role="list">
+
+          <!-- ══ ELENA ROSSI ══ -->
+          <article class="profile-card profile-card--featured fade-in" role="listitem" data-specialty="architect"
+            id="card-elena" aria-label="Elena Rossi – Lead Architect">
+            <div class="profile-header">
+              <div class="profile-avatar-wrap">
+                <img src="assets/architect_profile.png" alt="Elena Rossi, Lead Architect" class="profile-avatar"
+                  loading="lazy" />
+                <span class="profile-online" title="Available now"></span>
+              </div>
+              <div class="profile-identity">
+                <h2 class="profile-name">Elena Rossi</h2>
+                <span class="profile-title">Lead Architect · RIBA Certified</span>
+                <div class="profile-rating"><span class="stars">★★★★★</span> <span>5.0 <em>(94 reviews)</em></span>
+                </div>
+              </div>
+              <div class="profile-badge">Top Rated</div>
+            </div>
+            <p class="profile-bio">
+              Specializing in minimalist residential and commercial interiors with a focus on biophilic design and
+              technology integration. Elena has transformed 200+ spaces across Europe and North America.
+            </p>
+            <div class="profile-tags">
+              <span class="tag">Minimalist</span><span class="tag">Biophilic</span>
+              <span class="tag">Smart Home</span><span class="tag">Scandinavian</span>
+            </div>
+            <div class="profile-stats">
+              <div class="pstat"><strong>200+</strong><span>Projects</span></div>
+              <div class="pstat"><strong>12 yrs</strong><span>Experience</span></div>
+              <div class="pstat"><strong>$180</strong><span>/ hour</span></div>
+            </div>
+
+            <!-- ═══ BOOKING WIDGET ═══ -->
+            <div class="booking-widget" id="widget-elena" aria-label="Book Elena Rossi">
+              <div class="booking-widget__header">
+                <h3>Select a Date</h3>
+                <div class="booking-nav">
+                  <button class="cal-nav-btn cal-prev" aria-label="Previous month">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                  </button>
+                  <span class="cal-month" aria-live="polite"></span>
+                  <button class="cal-nav-btn cal-next" aria-label="Next month">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="mini-calendar" role="grid" aria-label="Availability calendar"></div>
+              <div class="booking-time-slots" aria-label="Available time slots" aria-live="polite">
+                <span class="time-slot-placeholder">Select a date to see available times</span>
+              </div>
+              <button class="btn btn-primary btn-full confirm-booking-btn" disabled data-expert="Elena Rossi"
+                data-rate="$180/hr">
+                Confirm Booking
+              </button>
+            </div>
+          </article>
+
+          <!-- ══ MARCO IVANOV ══ -->
+          <article class="profile-card fade-in" role="listitem" data-specialty="smart" id="card-marco"
+            aria-label="Marco Ivanov – Smart Home Integrator">
+            <div class="profile-header">
+              <div class="profile-avatar-wrap">
+                <img src="assets/consultant_marco.png" alt="Marco Ivanov, Smart Home Integrator" class="profile-avatar"
+                  loading="lazy" />
+                <span class="profile-online profile-online--away" title="Away"></span>
+              </div>
+              <div class="profile-identity">
+                <h2 class="profile-name">Marco Ivanov</h2>
+                <span class="profile-title">Smart Home Integrator · IoT Specialist</span>
+                <div class="profile-rating"><span class="stars">★★★★★</span> <span>4.8 <em>(57 reviews)</em></span>
+                </div>
+              </div>
+            </div>
+            <p class="profile-bio">
+              Expert in weaving IoT ecosystems into architectural spaces. Marco ensures your Lumin furniture and smart
+              home systems work as a unified, invisible whole.
+            </p>
+            <div class="profile-tags">
+              <span class="tag">IoT Integration</span><span class="tag">Home Automation</span><span
+                class="tag">Tech-Focused</span>
+            </div>
+            <div class="profile-stats">
+              <div class="pstat"><strong>150+</strong><span>Projects</span></div>
+              <div class="pstat"><strong>8 yrs</strong><span>Experience</span></div>
+              <div class="pstat"><strong>$150</strong><span>/ hour</span></div>
+            </div>
+
+            <div class="booking-widget" id="widget-marco" aria-label="Book Marco Ivanov">
+              <div class="booking-widget__header">
+                <h3>Select a Date</h3>
+                <div class="booking-nav">
+                  <button class="cal-nav-btn cal-prev" aria-label="Previous month">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                  </button>
+                  <span class="cal-month" aria-live="polite"></span>
+                  <button class="cal-nav-btn cal-next" aria-label="Next month">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="mini-calendar" role="grid" aria-label="Availability calendar"></div>
+              <div class="booking-time-slots" aria-live="polite">
+                <span class="time-slot-placeholder">Select a date to see available times</span>
+              </div>
+              <button class="btn btn-primary btn-full confirm-booking-btn" disabled data-expert="Marco Ivanov"
+                data-rate="$150/hr">
+                Confirm Booking
+              </button>
+            </div>
+          </article>
+
+          <!-- ══ SAYA TANAKA ══ -->
+          <article class="profile-card fade-in" role="listitem" data-specialty="interior" id="card-saya"
+            aria-label="Saya Tanaka – Interior Designer">
+            <div class="profile-header">
+              <div class="profile-avatar-wrap">
+                <img src="assets/consultant_saya.png" alt="Saya Tanaka, Senior Interior Designer" class="profile-avatar"
+                  loading="lazy" />
+              </div>
+              <div class="profile-identity">
+                <h2 class="profile-name">Saya Tanaka</h2>
+                <span class="profile-title">Senior Interior Designer · ASID Member</span>
+                <div class="profile-rating"><span class="stars">★★★★★</span> <span>4.9 <em>(103 reviews)</em></span>
+                </div>
+              </div>
+            </div>
+            <p class="profile-bio">
+              Blending Japanese wabi-sabi principles with contemporary Western aesthetics. Saya creates serene,
+              purposeful spaces where every object earns its place.
+            </p>
+            <div class="profile-tags">
+              <span class="tag">Wabi-Sabi</span><span class="tag">Japandi</span><span class="tag">Luxury
+                Residential</span>
+            </div>
+            <div class="profile-stats">
+              <div class="pstat"><strong>280+</strong><span>Projects</span></div>
+              <div class="pstat"><strong>15 yrs</strong><span>Experience</span></div>
+              <div class="pstat"><strong>$200</strong><span>/ hour</span></div>
+            </div>
+
+            <div class="booking-widget" id="widget-saya" aria-label="Book Saya Tanaka">
+              <div class="booking-widget__header">
+                <h3>Select a Date</h3>
+                <div class="booking-nav">
+                  <button class="cal-nav-btn cal-prev" aria-label="Previous month">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                  </button>
+                  <span class="cal-month" aria-live="polite"></span>
+                  <button class="cal-nav-btn cal-next" aria-label="Next month">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="mini-calendar" role="grid" aria-label="Availability calendar"></div>
+              <div class="booking-time-slots" aria-live="polite">
+                <span class="time-slot-placeholder">Select a date to see available times</span>
+              </div>
+              <button class="btn btn-primary btn-full confirm-booking-btn" disabled data-expert="Saya Tanaka"
+                data-rate="$200/hr">
+                Confirm Booking
+              </button>
+            </div>
+          </article>
+
+        </div><!-- /profiles-grid -->
+      </div>
+    </section>
+
+    <!-- ══════════════════════════
+       FAQ
+  ══════════════════════════ -->
+    <section class="faq-section" aria-label="Frequently asked questions">
+      <div class="section-container">
+        <div class="section-header fade-in">
+          <span class="section-label">FAQ</span>
+          <h2 class="section-title">Common Questions</h2>
+        </div>
+        <div class="faq-list" id="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              What happens after I book?
+              <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">You'll receive a calendar invite and a pre-consultation questionnaire via email. The
+              expert reviews your brief before the session so every minute counts.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Are consultations remote or in-person?
+              <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">Both options are available. Video consultations are conducted via a HD Lumin Space
+              call link. In-person sessions are available in select cities — check each expert's profile for
+              availability.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Can I reschedule or cancel?
+              <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">Yes. Cancel or reschedule up to 24 hours before the session for a full refund.
+              Changes within 24 hours are subject to a 50% holding fee.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Do I need to own a Lumin product?
+              <svg class="faq-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.5">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">Not at all! Consultations cover your entire space. Our experts will naturally
+              suggest which Lumin products fit your design if relevant — but they work independently.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/store.js"></script>
+  <script src="js/ui.js"></script>
+  <script>
+    /* ════════════════════════════════════════
+       CONSULTATIONS PAGE LOGIC
+    ════════════════════════════════════════ */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Menangkap semua form atau tombol submit booking di dalam widget arsitek
+      const bookingForms = document.querySelectorAll('.consult-widget-form, #booking-modal form');
+
+      bookingForms.forEach(form => {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault(); // Mencegah page stuck / reload bawaan browser
+
+          // Ambil data arsitek dari atribut data atau text terdekat
+          const card = form.closest('.profile-card') || document.querySelector('.profile-card');
+          const expertName = card ? card.querySelector('.profile-card__name').textContent : 'Expert Designer';
+          const expertImg = card ? card.querySelector('.profile-card__img').src : 'img/placeholder.jpg';
+
+          // Ambil input tanggal dan waktu yang dipilih user
+          const dateInput = form.querySelector('input[type="date"]')?.value || 'TBD';
+          const timeInput = form.querySelector('select')?.value || 'TBD';
+
+          // Masukkan konsultasi sebagai produk ke dalam Cart Store
+          Store.addItem({
+            id: `consult-${expertName.toLowerCase().replace(/\s+/g, '-')}`,
+            name: `Design Consultation (${expertName})`,
+            price: 750000, // Tentukan harga dasar konsultasi (misal Rp 750.000)
+            image: expertImg,
+            finish: `Date: ${dateInput}`, // Memanfaatkan slot 'finish' untuk detail tanggal
+            size: `Time: ${timeInput}`    // Memanfaatkan slot 'size' untuk detail jam
+          });
+
+          // Tampilkan notifikasi sukses
+          if (window.showToast) {
+            showToast(`✓ Consultation with ${expertName} added to cart!`);
+          }
+
+          // Otomatis buka Cart Drawer agar user melihat konsultasinya sudah masuk
+          const cartOverlay = document.getElementById('cart-overlay');
+          if (cartOverlay) {
+            cartOverlay.classList.add('open');
+            cartOverlay.setAttribute('aria-hidden', 'false');
+          }
+
+          // Jika ada modal booking yang sedang terbuka, tutup modalnya secara aman
+          const bModal = document.getElementById('booking-modal');
+          if (bModal && bModal.classList.contains('open')) {
+            bModal.classList.remove('open');
+            bModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+          }
+        });
+      });
+
+      /* ── Mini Calendar ── */
+      const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+      const DAY_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+      // Time slot pools per expert (mock data)
+      const SLOT_POOLS = {
+        'widget-elena': ['09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'],
+        'widget-marco': ['10:00', '11:30', '13:30', '15:00', '16:30'],
+        'widget-saya': ['09:30', '11:00', '14:00', '15:30', '17:00'],
+      };
+
+      // Unavailable days by widget (mock: weekends always off + a few random days)
+      function isAvailable(widgetId, date) {
+        const dow = date.getDay();
+        if (dow === 0 || dow === 6) return false; // no weekends
+        // Deterministically block some weekdays per expert
+        const seed = (widgetId.charCodeAt(7) || 0) + date.getDate();
+        return seed % 5 !== 0; // ~20% blocked
+      }
+
+      function initWidget(widgetId) {
+        const widget = document.getElementById(widgetId);
+        if (!widget) return;
+
+        const monthLabel = widget.querySelector('.cal-month');
+        const calGrid = widget.querySelector('.mini-calendar');
+        const timeSlotsEl = widget.querySelector('.booking-time-slots');
+        const confirmBtn = widget.querySelector('.confirm-booking-btn');
+        const prevBtn = widget.querySelector('.cal-prev');
+        const nextBtn = widget.querySelector('.cal-next');
+
+        const now = new Date();
+        let viewYear = now.getFullYear();
+        let viewMonth = now.getMonth();
+        let selectedDate = null;
+        let selectedTime = null;
+
+        function renderCalendar() {
+          monthLabel.textContent = `${MONTH_NAMES[viewMonth]} ${viewYear}`;
+          calGrid.innerHTML = '';
+
+          // Day headers
+          DAY_LABELS.forEach(d => {
+            const el = document.createElement('div');
+            el.className = 'cal-day-label';
+            el.textContent = d;
+            calGrid.appendChild(el);
+          });
+
+          const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+          const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+          // Empty cells before first
+          for (let i = 0; i < firstDay; i++) {
+            const el = document.createElement('div');
+            el.className = 'cal-day cal-day--empty';
+            calGrid.appendChild(el);
+          }
+
+          for (let d = 1; d <= daysInMonth; d++) {
+            const dateObj = new Date(viewYear, viewMonth, d);
+            const isPast = dateObj < new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const isAvail = !isPast && isAvailable(widgetId, dateObj);
+            const isToday = dateObj.toDateString() === now.toDateString();
+            const isSel = selectedDate && dateObj.toDateString() === selectedDate.toDateString();
+
+            const el = document.createElement('div');
+            el.className = 'cal-day' +
+              (isToday ? ' cal-day--today' : '') +
+              (!isAvail ? ' cal-day--disabled' : '') +
+              (isSel ? ' selected' : '');
+            el.textContent = d;
+            el.setAttribute('role', 'gridcell');
+            el.setAttribute('aria-label', `${MONTH_NAMES[viewMonth]} ${d}, ${viewYear}${!isAvail ? ' – unavailable' : ''}`);
+
+            if (isAvail) {
+              el.addEventListener('click', () => {
+                selectedDate = dateObj;
+                selectedTime = null;
+                renderCalendar();
+                renderTimeSlots();
+                confirmBtn.disabled = true;
+              });
+            }
+            calGrid.appendChild(el);
+          }
+        }
+
+        function renderTimeSlots() {
+          const slots = SLOT_POOLS[widgetId] || [];
+          timeSlotsEl.innerHTML = '';
+          if (!selectedDate) {
+            timeSlotsEl.innerHTML = '<span class="time-slot-placeholder">Select a date to see available times</span>';
+            return;
+          }
+          slots.forEach(time => {
+            const btn = document.createElement('button');
+            btn.className = 'time-slot';
+            btn.textContent = time;
+            btn.setAttribute('aria-label', `Book ${time}`);
+            btn.addEventListener('click', () => {
+              timeSlotsEl.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+              btn.classList.add('selected');
+              selectedTime = time;
+              confirmBtn.disabled = false;
+            });
+            timeSlotsEl.appendChild(btn);
+          });
+        }
+
+        prevBtn.addEventListener('click', () => {
+          viewMonth--;
+          if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+          renderCalendar();
+        });
+        nextBtn.addEventListener('click', () => {
+          viewMonth++;
+          if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+          renderCalendar();
+        });
+
+        confirmBtn.addEventListener('click', () => {
+          if (!selectedDate || !selectedTime) return;
+          const expert = confirmBtn.dataset.expert;
+          const rate = confirmBtn.dataset.rate;
+          const dateStr = selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+          // 1. Ambil foto arsitek dari card terkait secara otomatis
+          const card = confirmBtn.closest('.profile-card');
+          const expertImg = card ? card.querySelector('.profile-avatar').getAttribute('src') : 'assets/architect_profile.png';
+
+          // 2. Konversi rate text (misal "$180/hr") menjadi angka murni (180) untuk integrasi harga checkout
+          const numericPrice = parseInt(rate.replace(/[^0-9]/g, '')) || 0;
+
+          // 3. Masukkan data booking konsultasi ke dalam Cart Store
+          if (window.Store) {
+            Store.addItem({
+              id: `consult-${expert.toLowerCase().replace(/\s+/g, '-')}`,
+              name: `Design Consultation (${expert})`,
+              price: numericPrice,
+              image: expertImg,
+              finish: `Date: ${dateStr}`, // Menyimpan informasi tanggal booking
+              size: `Time: ${selectedTime}` // Menyimpan informasi jam booking
+            });
+
+            // 4. Tampilkan toast notification sukses
+            if (window.showToast) {
+              showToast(`✓ Consultation with ${expert} added to cart!`);
+            }
+
+            // 5. Otomatis luncurkan Cart Drawer (keranjang samping) agar user tahu item sudah masuk
+            const cartOverlay = document.getElementById('cart-overlay');
+            if (cartOverlay) {
+              cartOverlay.classList.add('open');
+              cartOverlay.setAttribute('aria-hidden', 'false');
+            }
+          } else {
+            console.error("Sistem Store tidak ditemukan. Pastikan store.js ter-load dengan benar.");
+          }
+
+          // Reset widget kalendar setelah berhasil masuk keranjang
+          selectedDate = null;
+          selectedTime = null;
+          confirmBtn.disabled = true;
+          renderCalendar();
+          renderTimeSlots();
+        });
+
+        renderCalendar();
+      }
+
+      // Initialise all three widgets
+      ['widget-elena', 'widget-marco', 'widget-saya'].forEach(initWidget);
+
+      const expertTabs = document.querySelectorAll('.service-tab');
+      const expertCards = document.querySelectorAll('.profile-card[data-specialty]');
+
+      expertTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const filter = tab.dataset.filter;
+
+          expertTabs.forEach(t => {
+            const isActive = t === tab;
+            t.classList.toggle('active', isActive);
+            t.setAttribute('aria-selected', String(isActive));
+          });
+
+          expertCards.forEach(card => {
+            const shouldShow = filter === 'all' || card.dataset.specialty === filter;
+            card.hidden = !shouldShow;
+          });
+        });
+      });
+
+      /* ── Booking confirmation modal close ── */
+      const bmClose = document.getElementById('bm-close');
+      const bModal = document.getElementById('booking-modal');
+      function closeBModal() {
+        bModal.classList.remove('open');
+        bModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+      bmClose && bmClose.addEventListener('click', closeBModal);
+      bModal && bModal.addEventListener('click', e => { if (e.target === bModal) closeBModal(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && bModal.classList.contains('open')) closeBModal(); });
+
+      /* ── FAQ accordion ── */
+      document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.faq-item');
+          const isOpen = item.classList.contains('open');
+          // Close all
+          document.querySelectorAll('.faq-item.open').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      /* ── Hash scroll to expert ── */
+      if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
+      }
+
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop – Lumin Space Smart Furniture Collection</title>
+  <meta name="description" content="Browse the full Lumin Space smart furniture collection. Wireless-charging tables, standing desks and coffee tables with Qi2 technology." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="js/components.js"></script>
+  <style>
+    /* Styling Filter Tabs */
+    .shop-filter-container {
+      display: flex;
+      justify-content: flex-start;
+      gap: var(--space-3, 12px);
+      margin-bottom: var(--space-6, 24px); /* Jarak ke judul Smart Furniture */
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--color-border, #e5e5e5);
+      padding: var(--space-2, 8px) var(--space-5, 20px);
+      border-radius: var(--radius-full, 9999px);
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      color: var(--color-deep-light, #5c5577);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: var(--text-sm, 0.875rem);
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--color-deep, #342d47);
+      color: var(--color-white, #ffffff);
+      border-color: var(--color-deep, #342d47);
+    }
+    /* Animasi transisi saat filter aktif */
+    .product-card-wrap {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .product-card-wrap.hidden {
+      display: none !important;
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+
+<div id="qv-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="qv-title" aria-modal="true">
+  <div class="modal-box">
+    <button class="modal-close" id="qv-close" aria-label="Close quick view">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="modal-grid">
+      <div class="modal-gallery">
+        <img id="qv-img" src="" alt="Product View" />
+      </div>
+      <div class="modal-details">
+        <span class="section-label" id="qv-tag">Featured</span>
+        <h2 class="h2" id="qv-title" style="margin:0 0 var(--space-2) 0;">Product Title</h2>
+        <div class="qv-price" id="qv-price">$0.00</div>
+        <p id="qv-desc" style="color:var(--color-deep-light); font-size:var(--text-sm); line-height:1.6; margin-bottom:var(--space-6);">Description</p>
+        
+        <div class="qv-option-group" id="qv-finish-wrap">
+          <span class="qv-option-label">Select Finish:</span>
+          <div class="qv-options-grid" id="qv-finish-opts"></div>
+        </div>
+        
+        <div class="qv-option-group" id="qv-size-wrap">
+          <span class="qv-option-label">Select Size:</span>
+          <div class="qv-options-grid" id="qv-size-opts"></div>
+        </div>
+        
+        <button class="btn btn-primary btn-full" id="qv-add-btn" style="margin-top:auto;">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="shop-page">
+  <section class="page-hero" aria-label="Shop header">
+    <div class="section-container">
+      <div class="page-hero__inner">
+        <div>
+          <div class="shop-filter-container">
+            <button class="filter-btn active" data-filter="all">All Objects</button>
+            <button class="filter-btn" data-filter="table">Tables</button>
+            <button class="filter-btn" data-filter="lamp">Lamps</button>
+          </div>
+
+          <span class="section-label">The Collection</span>
+          <h1 class="page-hero__title">Smart Furniture</h1>
+          <p class="page-hero__sub">Explore our range of premium, wireless-charging surfaces and architectural task lighting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="shop-catalog" aria-label="Product Catalog">
+    <div class="section-container">
+
+      <div class="products-grid" id="shop-grid">
+        
+        <div class="product-card-wrap" data-category="table" id="apex-pro">
+          <div class="product-card">
+            <div class="product-card__img-wrap">
+              <span class="badge-tag badge-tag--bestseller">Best Seller</span>
+              <img src="./assets/Lumin Meeting Table.png" alt="Lumin Meeting Table" class="product-card__img">
+              <button class="quick-view-btn" data-product="apex_pro" aria-label="Quick view Lumin Meeting Table">Quick View</button>
+            </div>
+            <div class="product-card__content">
+              <span class="product-card__tag">Meeting Table • Multi-Device Charging</span>
+              <h3 class="product-card__title">Lumin Meeting Table</h3>
+              <p class="product-card__desc">A refined meeting table with built-in charging zones, made for shared workspaces that need power without cable clutter.</p>
+              
+              <div class="specs-box">
+                <div class="spec-item">
+                  <span class="spec-icon">⚡</span>
+                  <div>
+                    <strong>Qi Wireless Charging Zones</strong>
+                    <span>For phones, earbuds, and daily devices</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-icon">📐</span>
+                  <div>
+                    <strong>140 × 70 × 75 cm</strong>
+                    <span>Meeting-ready footprint</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-card__footer">
+                <span class="product-card__price">$1,000.00</span>
+                <button class="btn-add-to-cart-trigger" data-id="apex_pro">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="product-card-wrap" data-category="table" id="desk">
+          <div class="product-card">
+            <div class="product-card__img-wrap">
+              <span class="badge-tag badge-tag--new">New Arrival</span>
+              <img src="./assets/Lumin Single Desk.png" alt="Lumin Single Desk" class="product-card__img">
+              <button class="quick-view-btn" data-product="desk" aria-label="Quick view Lumin Single Desk">Quick View</button>
+            </div>
+            <div class="product-card__content">
+              <span class="product-card__tag">Single Desk • Workstation</span>
+              <h3 class="product-card__title">Lumin Single Desk</h3>
+              <p class="product-card__desc">A larger single-person workstation with hidden power access for laptops, phones, and daily desk essentials.</p>
+              
+              <div class="specs-box">
+                <div class="spec-item">
+                  <span class="spec-icon">⚡</span>
+                  <div>
+                    <strong>Wireless + USB-C Power</strong>
+                    <span>Designed for daily work devices</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-icon">📐</span>
+                  <div>
+                    <strong>160 × 80 cm</strong>
+                    <span>Spacious work surface</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-card__footer">
+                <span class="product-card__price">$500.00</span>
+                <button class="btn-add-to-cart-trigger" data-id="desk">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="product-card-wrap" data-category="lamp" id="clip-lamp">
+          <div class="product-card">
+            <div class="product-card__img-wrap">
+              <span class="badge-tag badge-tag--bestseller">Best Seller</span>
+              <img src="./assets/Lampmini.png" alt="Lumin Clip Lamp" class="product-card__img">
+              <button class="quick-view-btn" data-product="clip_lamp" aria-label="Quick view Lumin Clip Lamp">Quick View</button>
+            </div>
+            <div class="product-card__content">
+              <span class="product-card__tag">Clip Lamp • Flexible Task Light</span>
+              <h3 class="product-card__title">Lumin Clip Lamp</h3>
+              <p class="product-card__desc">A flexible clip-on task lamp with a slim LED head, ideal for desks, shelves, and reading corners.</p>
+              
+              <div class="specs-box">
+                <div class="spec-item">
+                  <span class="spec-icon">⚡</span>
+                  <div>
+                    <strong>Adjustable LED Head</strong>
+                    <span>Focused warm task lighting</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-icon">📐</span>
+                  <div>
+                    <strong>Clip Mount</strong>
+                    <span>Secure grip for desks and shelves</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-card__footer">
+                <span class="product-card__price">$5.00</span>
+                <button class="btn-add-to-cart-trigger" data-id="clip_lamp">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card-wrap" data-category="table" id="nightstand">
+          <div class="product-card">
+            <div class="product-card__img-wrap">
+              <span class="badge-tag badge-tag--new">New Arrival</span>
+              <img src="./assets/Lumin Nightstand.png" alt="Lumin Nightstand" class="product-card__img">
+              <button class="quick-view-btn" data-product="desk_lamp" aria-label="Quick view Lumin Nightstand">Quick View</button>
+            </div>
+            <div class="product-card__content">
+              <span class="product-card__tag">Nightstand • Lamp + Charging</span>
+              <h3 class="product-card__title">Lumin Nightstand</h3>
+              <p class="product-card__desc">A bedside table with a soft integrated lamp and wireless charging surface for a calmer night routine.</p>
+              
+              <div class="specs-box">
+                <div class="spec-item">
+                  <span class="spec-icon">⚡</span>
+                  <div>
+                    <strong>Wireless Charging Surface</strong>
+                    <span>Dedicated phone charging area</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-icon">📐</span>
+                  <div>
+                    <strong>Soft Ambient Lamp</strong>
+                    <span>Warm bedside illumination</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-card__footer">
+                <span class="product-card__price">$200.00</span>
+                <button class="btn-add-to-cart-trigger" data-id="desk_lamp">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card-wrap" data-category="lamp" id="egg-lamp">
+          <div class="product-card">
+            <div class="product-card__img-wrap">
+              <span class="badge-tag badge-tag--new">New Arrival</span>
+              <img src="./assets/Egglamp.png" alt="Lumin Egg Lamp" class="product-card__img">
+              <button class="quick-view-btn" data-product="egg_lamp" aria-label="Quick view Lumin Egg Lamp">Quick View</button>
+            </div>
+            <div class="product-card__content">
+              <span class="product-card__tag">Egg Lamp • Wireless Charging Dock</span>
+              <h3 class="product-card__title">Lumin Egg Lamp</h3>
+              <p class="product-card__desc">A soft-glow bedside lamp paired with a wireless charging dock for phones and small daily essentials.</p>
+              
+              <div class="specs-box">
+                <div class="spec-item">
+                  <span class="spec-icon">⚡</span>
+                  <div>
+                    <strong>Wireless Charging Dock</strong>
+                    <span>Phone-ready bedside charging</span>
+                  </div>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-icon">📐</span>
+                  <div>
+                    <strong>Soft Diffused Glow</strong>
+                    <span>Warm light for nightstands</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="product-card__footer">
+                <span class="product-card__price">$10.00</span>
+                <button class="btn-add-to-cart-trigger" data-id="egg_lamp">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    /* ── LOGIKA FILTER JAVASCRIPT ── */
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const productItems = document.querySelectorAll('.product-card-wrap');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filterValue = btn.dataset.filter;
+
+        productItems.forEach(item => {
+          const itemCategory = item.dataset.category;
+
+          if (filterValue === 'all') {
+            item.classList.remove('hidden');
+          } else if (filterValue === 'table') {
+            if (itemCategory === 'table') {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          } else if (filterValue === 'lamp') {
+            if (itemCategory === 'lamp') {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          }
+        });
+      });
+    });
+
+    /* ── INTEGRASI MODAL QUICK VIEW SECARA DINAMIS ── */
+    const modal = document.getElementById('qv-modal');
+    const qvClose = document.getElementById('qv-close');
+    let qvProductId = '';
+    let qvFinish = '';
+    let qvSize = '';
+
+    function openQuickView(productId) {
+      const p = PRODUCTS[productId];
+      if (!p) return;
+
+      qvProductId = productId;
+      document.getElementById('qv-img').src = p.image;
+      document.getElementById('qv-title').textContent = p.name;
+      document.getElementById('qv-price').textContent = Store.formatPrice(p.price);
+      
+      const descEl = document.getElementById('qv-desc');
+      if(p.id === 'apex_pro') descEl.textContent = "A refined meeting table with built-in charging zones, made for shared workspaces that need power without cable clutter.";
+      else if(p.id === 'desk') descEl.textContent = "A larger single-person workstation with hidden power access for laptops, phones, and daily desk essentials.";
+      else if(p.id === 'clip_lamp') descEl.textContent = "A flexible clip-on task lamp with a slim LED head, ideal for desks, shelves, and reading corners.";
+      else if(p.id === 'desk_lamp') descEl.textContent = "A bedside table with a soft integrated lamp and wireless charging surface for a calmer night routine.";
+      else if(p.id === 'egg_lamp') descEl.textContent = "A soft-glow bedside lamp paired with a wireless charging dock for phones and small daily essentials.";
+      else descEl.textContent = "A refined Lumin object designed to keep everyday spaces clean, calm, and powered.";
+
+      const finishWrap = document.getElementById('qv-finish-wrap');
+      const finishOpts = document.getElementById('qv-finish-opts');
+      finishOpts.innerHTML = '';
+      if (p.finishes && p.finishes.length > 0) {
+        finishWrap.style.display = 'block';
+        qvFinish = p.finishes[0];
+        p.finishes.forEach((f, idx) => {
+          const btn = document.createElement('button');
+          btn.className = `option-chip ${idx === 0 ? 'active' : ''}`;
+          btn.textContent = f;
+          btn.dataset.finish = f;
+          btn.type = 'button';
+          finishOpts.appendChild(btn);
+          btn.addEventListener('click', () => {
+            finishOpts.querySelectorAll('.option-chip').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            qvFinish = btn.dataset.finish;
+          });
+        });
+      } else {
+        finishWrap.style.display = 'none';
+        qvFinish = '';
+      }
+
+      const sizeWrap = document.getElementById('qv-size-wrap');
+      const sizeOpts = document.getElementById('qv-size-opts');
+      sizeOpts.innerHTML = '';
+      if (p.sizes && p.sizes.length > 0) {
+        sizeWrap.style.display = 'block';
+        qvSize = p.sizes[0];
+        p.sizes.forEach((s, idx) => {
+          const btn = document.createElement('button');
+          btn.className = `option-chip ${idx === 0 ? 'active' : ''}`;
+          btn.textContent = s;
+          btn.dataset.size = s;
+          btn.type = 'button';
+          sizeOpts.appendChild(btn);
+          btn.addEventListener('click', () => {
+            sizeOpts.querySelectorAll('.option-chip').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            qvSize = btn.dataset.size;
+          });
+        });
+      } else {
+        sizeWrap.style.display = 'none';
+        qvSize = '';
+      }
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.quick-view-btn').forEach(btn => {
+      btn.addEventListener('click', () => openQuickView(btn.dataset.product));
+    });
+    if(qvClose) qvClose.addEventListener('click', closeModal);
+    if(modal) modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+    document.getElementById('qv-add-btn').addEventListener('click', () => {
+      const p = PRODUCTS[qvProductId];
+      if (!p) return;
+      Store.addItem({ id: p.id, name: p.name, price: p.price, image: p.image, finish: qvFinish, size: qvSize });
+      if(typeof showToast === 'function') showToast(`✓ ${p.name} added to cart!`);
+      closeModal();
+    });
+
+    // Add-to-cart buttons on product cards (default options)
+    document.querySelectorAll('.btn-add-to-cart-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        const p = PRODUCTS[id];
+        if (!p) return;
+        Store.addItem({ id: p.id, name: p.name, price: p.price, image: p.image });
+        if (typeof showToast === 'function') showToast(`✓ ${p.name} added to cart!`);
+      });
+    });
+  });
+</script>
+</body>
+</html>
