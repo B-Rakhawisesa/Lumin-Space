@@ -4,7 +4,7 @@
  */
 
 const CART_KEY = 'lumin_cart';
-const FREE_SHIPPING_THRESHOLD = 200; // Batas gratis ongkir dalam Dollar
+const ORDERS_KEY = 'lumin_orders';
 
 // DATABASE PRODUK INTERNAL (Meja, Lampu Baru dengan .PNG, & Konsultasi Asli)
 const PRODUCTS = {
@@ -57,19 +57,19 @@ const PRODUCTS = {
     id: 'con_elena',
     name: 'Minimalist Space Transformation',
     price: 150.00,
-    image: './assets/expert-elena.jpg'
+    image: './assets/architect_profile.png'
   },
   con_marcus: {
     id: 'con_marcus',
     name: 'Smart Home Architectural Integration',
     price: 250.00,
-    image: './assets/expert-marcus.jpg'
+    image: './assets/consultant_marco.png'
   },
   con_saraswati: {
     id: 'con_saraswati',
     name: 'Eco-Luxury Material & Lighting Styling',
     price: 180.00,
-    image: './assets/expert-saraswati.jpg'
+    image: './assets/consultant_saya.png'
   }
 };
 
@@ -131,6 +131,45 @@ const Store = {
     this.saveCart([]);
   },
 
+  /** @returns {Array} saved customer orders */
+  getOrders() {
+    try {
+      return JSON.parse(localStorage.getItem(ORDERS_KEY)) || [];
+    } catch {
+      return [];
+    }
+  },
+
+  /** Save an order snapshot to localStorage */
+  saveOrder(order) {
+    const orders = this.getOrders();
+    const existingIndex = orders.findIndex(i => i.orderId === order.orderId);
+    const nextOrder = {
+      ...order,
+      status: order.status || 'processing',
+      paymentStatus: order.paymentStatus || 'paid',
+      total: order.total ?? order.subtotal ?? 0
+    };
+
+    if (existingIndex >= 0) {
+      orders[existingIndex] = { ...orders[existingIndex], ...nextOrder };
+    } else {
+      orders.unshift(nextOrder);
+    }
+
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+    window.dispatchEvent(new CustomEvent('orders:updated', { detail: { orders } }));
+  },
+
+  /** Update order status by id */
+  updateOrderStatus(orderId, status) {
+    const orders = this.getOrders().map(order => (
+      order.orderId === orderId ? { ...order, status, updatedAt: new Date().toISOString() } : order
+    ));
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+    window.dispatchEvent(new CustomEvent('orders:updated', { detail: { orders } }));
+  },
+
   /** Format number to USD currency format ($) */
   formatPrice(num) {
     return '$' + Number(num).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -139,5 +178,4 @@ const Store = {
 
 // Expose variables globally
 window.PRODUCTS = PRODUCTS;
-window.FREE_SHIPPING_THRESHOLD = FREE_SHIPPING_THRESHOLD;
 window.Store = Store;
