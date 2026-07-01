@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders - Lumin Space</title>
+  <meta name="description" content="Track your Lumin Space orders, payment status, product details, and order progress." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="js/components.js"></script>
+</head>
+<body>
+
+<main class="orders-page">
+  <section class="page-hero" aria-label="Orders header">
+    <div class="section-container">
+      <div class="page-hero__inner">
+        <div>
+          <span class="section-label">My Transactions</span>
+          <h1 class="page-hero__title">My Orders</h1>
+          <p class="page-hero__sub">Track your purchases, check payment status, review item details, and confirm when an order has arrived.</p>
+        </div>
+        <div class="page-hero__breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">&gt;</span>
+          <span aria-current="page">My Orders</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="orders-section" aria-label="My orders">
+    <div class="section-container">
+      <div class="orders-stats" id="orders-stats" aria-label="My order summary"></div>
+
+      <div class="orders-toolbar">
+        <div class="orders-search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <label for="order-search" class="sr-only">Search orders</label>
+          <input type="search" id="order-search" placeholder="Search order ID or product" />
+        </div>
+
+        <div class="orders-tabs" role="tablist" aria-label="Filter orders by status">
+          <button class="orders-tab active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="orders-tab" data-filter="processing" role="tab" aria-selected="false">Processing</button>
+          <button class="orders-tab" data-filter="packed" role="tab" aria-selected="false">Packed</button>
+          <button class="orders-tab" data-filter="shipped" role="tab" aria-selected="false">On the Way</button>
+          <button class="orders-tab" data-filter="completed" role="tab" aria-selected="false">Completed</button>
+        </div>
+      </div>
+
+      <div class="orders-demo-note" id="orders-demo-note">
+        Showing sample transactions because you have not placed an order in this browser yet.
+      </div>
+
+      <div class="orders-layout">
+        <div class="orders-list" id="orders-list" aria-live="polite"></div>
+
+        <aside class="orders-side-panel" aria-label="Order help">
+          <h2>Order Help</h2>
+          <div class="orders-side-card">
+            <span class="side-card-label">Need a receipt?</span>
+            <strong>Open an order card to review its purchase details.</strong>
+            <p>Your saved orders keep item details, payment state, recipient info, and progress together.</p>
+          </div>
+          <div class="orders-side-card">
+            <span class="side-card-label">Order Progress</span>
+            <ol class="orders-flow">
+              <li>Order placed</li>
+              <li>Payment confirmed</li>
+              <li>Order packed</li>
+              <li>On the way</li>
+              <li>Completed</li>
+            </ol>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const listEl = document.getElementById('orders-list');
+  const statsEl = document.getElementById('orders-stats');
+  const searchEl = document.getElementById('order-search');
+  const tabs = Array.from(document.querySelectorAll('.orders-tab'));
+  const demoNote = document.getElementById('orders-demo-note');
+
+  const statusMeta = {
+    processing: { label: 'Processing', tone: 'info', step: 2 },
+    packed: { label: 'Packed', tone: 'warning', step: 3 },
+    shipped: { label: 'On the Way', tone: 'info', step: 4 },
+    completed: { label: 'Completed', tone: 'success', step: 5 },
+    cancelled: { label: 'Cancelled', tone: 'danger', step: 1 }
+  };
+
+  const sampleOrders = [
+    {
+      orderId: 'ORD-SAMPLE-2401',
+      status: 'shipped',
+      paymentStatus: 'paid',
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(),
+      customer: { name: 'Nadia Pramesti', email: 'nadia@example.com', city: 'Jakarta Selatan' },
+      items: [
+        { id: 'desk', name: 'Lumin Single Desk', finish: 'Oak / White Base', size: '160x80 cm', qty: 1, price: 500, image: './assets/Lumin Single Desk.png' },
+        { id: 'egg_lamp', name: 'Lumin Egg Lamp', finish: 'Warm White', size: 'Standard', qty: 2, price: 10, image: './assets/Egglamp.png' }
+      ],
+      subtotal: 520,
+      total: 520,
+      demo: true
+    },
+    {
+      orderId: 'ORD-SAMPLE-2398',
+      status: 'processing',
+      paymentStatus: 'paid',
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
+      customer: { name: 'Raka Mahendra', email: 'raka@example.com', city: 'Bandung' },
+      items: [
+        { id: 'apex_pro', name: 'Lumin Meeting Table', finish: 'Natural Walnut', size: '140x70 cm', qty: 1, price: 1000, image: './assets/Lumin Meeting Table.png' }
+      ],
+      subtotal: 1000,
+      total: 1000,
+      demo: true
+    },
+    {
+      orderId: 'ORD-SAMPLE-2389',
+      status: 'completed',
+      paymentStatus: 'paid',
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
+      customer: { name: 'Mira Santoso', email: 'mira@example.com', city: 'Surabaya' },
+      items: [
+        { id: 'desk_lamp', name: 'Lumin Nightstand', finish: 'Warm Walnut', size: '60x45 cm', qty: 1, price: 200, image: './assets/Lumin Nightstand.png' }
+      ],
+      subtotal: 200,
+      total: 200,
+      demo: true
+    }
+  ];
+
+  let activeFilter = 'all';
+
+  function getOrders() {
+    const saved = Store.getOrders ? Store.getOrders() : [];
+    demoNote.style.display = saved.length ? 'none' : 'block';
+    return saved.length ? saved : sampleOrders;
+  }
+
+  function getItemImage(item) {
+    if (item.image) return item.image;
+    const product = window.PRODUCTS && window.PRODUCTS[item.id];
+    if (product) return product.image;
+
+    const itemText = `${item.id || ''} ${item.name || ''}`.toLowerCase();
+    if (itemText.includes('elena')) return './assets/architect_profile.png';
+    if (itemText.includes('marco') || itemText.includes('marcus')) return './assets/consultant_marco.png';
+    if (itemText.includes('saya') || itemText.includes('saraswati')) return './assets/consultant_saya.png';
+    if (itemText.includes('consult')) return './assets/architect_profile.png';
+
+    return './assets/Lumin Single Desk.png';
+  }
+
+  function formatDate(value) {
+    return new Intl.DateTimeFormat('en', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(new Date(value));
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
+  }
+
+  function statusBadge(status) {
+    const meta = statusMeta[status] || statusMeta.processing;
+    return `<span class="order-status order-status--${meta.tone}">${meta.label}</span>`;
+  }
+
+  function renderStats(orders) {
+    const stats = [
+      { label: 'All Orders', value: orders.length },
+      { label: 'Processing', value: orders.filter(i => i.status === 'processing').length },
+      { label: 'On the Way', value: orders.filter(i => i.status === 'shipped').length },
+      { label: 'Completed', value: orders.filter(i => i.status === 'completed').length }
+    ];
+
+    statsEl.innerHTML = stats.map(stat => `
+      <div class="orders-stat">
+        <span>${stat.label}</span>
+        <strong>${stat.value}</strong>
+      </div>
+    `).join('');
+  }
+
+  function renderTimeline(order) {
+    const activeStep = (statusMeta[order.status] || statusMeta.processing).step;
+    const steps = ['Placed', 'Paid', 'Packed', 'Sent', 'Done'];
+
+    return `
+      <div class="order-timeline" aria-label="Order progress">
+        ${steps.map((step, index) => `
+          <div class="timeline-step ${index + 1 <= activeStep ? 'is-active' : ''}">
+            <span></span>
+            <small>${step}</small>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  function renderOrder(order) {
+    const items = Array.isArray(order.items) ? order.items : [];
+    const firstItem = items[0] || { name: 'Order item' };
+    const itemCount = items.reduce((sum, item) => sum + Number(item.qty || 0), 0);
+    const total = order.total ?? order.subtotal ?? 0;
+
+    return `
+      <article class="order-card" data-order-id="${order.orderId}">
+        <div class="order-card__top">
+          <div>
+            <div class="order-id-row">
+              <strong>${escapeHtml(order.orderId)}</strong>
+              ${order.demo ? '<span class="order-demo-pill">Example</span>' : ''}
+            </div>
+            <span class="order-date">${formatDate(order.createdAt || Date.now())}</span>
+          </div>
+          ${statusBadge(order.status)}
+        </div>
+
+        <div class="order-card__main">
+          <div class="order-product-stack" aria-hidden="true">
+            ${items.slice(0, 3).map(item => `<img src="${escapeHtml(getItemImage(item))}" alt="" loading="lazy" />`).join('')}
+          </div>
+          <div class="order-card__info">
+            <h2>${escapeHtml(firstItem.name)}${items.length > 1 ? ` + ${items.length - 1} more` : ''}</h2>
+            <p>${itemCount} item${itemCount !== 1 ? 's' : ''} to ${escapeHtml(order.customer?.city || 'your address')}</p>
+            ${renderTimeline(order)}
+          </div>
+          <div class="order-card__total">
+            <span>Total</span>
+            <strong>${Store.formatPrice(total)}</strong>
+          </div>
+        </div>
+
+        <div class="order-details" hidden>
+          <div class="order-details__grid">
+            <div>
+              <h3>Items</h3>
+              <div class="order-items">
+                ${items.map(item => `
+                  <div class="order-item-row">
+                    <img src="${escapeHtml(getItemImage(item))}" alt="${escapeHtml(item.name)}" loading="lazy" />
+                    <div>
+                      <strong>${escapeHtml(item.name)}</strong>
+                      <span>${escapeHtml([item.finish, item.size].filter(Boolean).join(' - ') || 'Standard')} - Qty ${escapeHtml(item.qty)}</span>
+                    </div>
+                    <b>${Store.formatPrice((item.price || 0) * (item.qty || 1))}</b>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div>
+              <h3>Recipient</h3>
+              <dl class="order-customer">
+                <div><dt>Name</dt><dd>${escapeHtml(order.customer?.name || '-')}</dd></div>
+                <div><dt>Email</dt><dd>${escapeHtml(order.customer?.email || '-')}</dd></div>
+                <div><dt>City</dt><dd>${escapeHtml(order.customer?.city || '-')}</dd></div>
+                <div><dt>Payment</dt><dd>${escapeHtml(order.paymentStatus || 'paid')}</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-card__actions">
+          <button class="btn btn-ghost btn-sm order-toggle" type="button">View Details</button>
+          <button class="btn btn-outline btn-sm order-reorder" type="button">Buy Again</button>
+          <button class="btn btn-primary btn-sm order-complete" type="button" ${order.status === 'completed' ? 'disabled' : ''}>Mark Received</button>
+        </div>
+      </article>
+    `;
+  }
+
+  function render() {
+    const query = searchEl.value.trim().toLowerCase();
+    const orders = getOrders();
+    renderStats(orders);
+
+    const filtered = orders.filter(order => {
+      const haystack = [
+        order.orderId,
+        order.status,
+        order.customer?.name,
+        order.customer?.email,
+        order.customer?.city,
+        ...(Array.isArray(order.items) ? order.items.map(item => item.name) : [])
+      ].filter(Boolean).join(' ').toLowerCase();
+
+      const matchesFilter = activeFilter === 'all' || order.status === activeFilter;
+      const matchesSearch = !query || haystack.includes(query);
+      return matchesFilter && matchesSearch;
+    });
+
+    if (!filtered.length) {
+      listEl.innerHTML = `
+        <div class="orders-empty">
+          <h2>No matching orders</h2>
+          <p>Try another status tab or search term.</p>
+          <a href="shop.html" class="btn btn-primary">Browse Collection</a>
+        </div>
+      `;
+      return;
+    }
+
+    listEl.innerHTML = filtered.map(renderOrder).join('');
+
+    listEl.querySelectorAll('.order-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.order-card');
+        const details = card.querySelector('.order-details');
+        const isHidden = details.hasAttribute('hidden');
+        details.toggleAttribute('hidden', !isHidden);
+        btn.textContent = isHidden ? 'Hide Details' : 'View Details';
+      });
+    });
+
+    listEl.querySelectorAll('.order-reorder').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const order = orders.find(item => item.orderId === btn.closest('.order-card').dataset.orderId);
+        if (!order) return;
+        (Array.isArray(order.items) ? order.items : []).forEach(item => {
+          const qty = Math.max(1, Number(item.qty) || 1);
+          for (let i = 0; i < qty; i += 1) {
+            Store.addItem({
+              id: item.id,
+              name: item.name,
+              price: item.price,
+              image: getItemImage(item),
+              finish: item.finish || '',
+              size: item.size || ''
+            });
+          }
+        });
+        if (typeof showToast === 'function') showToast('Items added back to cart.');
+      });
+    });
+
+    listEl.querySelectorAll('.order-complete').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const orderId = btn.closest('.order-card').dataset.orderId;
+        const order = orders.find(item => item.orderId === orderId);
+        if (!order || order.demo) {
+          if (typeof showToast === 'function') showToast('Sample orders cannot be updated.');
+          return;
+        }
+        Store.updateOrderStatus(orderId, 'completed');
+        if (typeof showToast === 'function') showToast('Order marked as received.');
+        render();
+      });
+    });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      activeFilter = tab.dataset.filter;
+      tabs.forEach(item => {
+        item.classList.toggle('active', item === tab);
+        item.setAttribute('aria-selected', item === tab ? 'true' : 'false');
+      });
+      render();
+    });
+  });
+
+  searchEl.addEventListener('input', render);
+  window.addEventListener('orders:updated', render);
+  render();
+});
+</script>
+</body>
+</html>
