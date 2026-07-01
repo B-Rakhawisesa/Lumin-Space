@@ -51,6 +51,7 @@
         <a href="index.html"         class="nav-link">Home</a>
         <a href="shop.html"          class="nav-link">Shop</a>
         <a href="consultations.html" class="nav-link">Consultations</a>
+        <a href="orders.html"        class="nav-link">My Orders</a>
         <a href="cart.html"          class="nav-link">My Cart</a>
       </nav>
 
@@ -70,6 +71,7 @@
       <a href="index.html"         class="mobile-link">Home</a>
       <a href="shop.html"          class="mobile-link">Shop</a>
       <a href="consultations.html" class="mobile-link">Consultations</a>
+      <a href="orders.html"        class="mobile-link">My Orders</a>
       <a href="cart.html"          class="mobile-link">My Cart</a>
       <a href="consultations.html" class="mobile-link mobile-link--accent">Book a Call</a>
     </div>
@@ -130,9 +132,9 @@
           <h4>Support</h4>
           <ul>
             <li><a href="#">FAQ</a></li>
-            <li><a href="#">Shipping &amp; Returns</a></li>
+            <li><a href="#">Returns</a></li>
             <li><a href="#">Warranty</a></li>
-            <li><a href="#">Track Order</a></li>
+            <li><a href="orders.html">Track Order</a></li>
           </ul>
         </div>
       </nav>
