@@ -67,9 +67,7 @@
         <aside class="cart-page-summary" aria-label="Order summary">
           <h2>Order Summary</h2>
           <div class="summary-row"><span>Subtotal</span><strong id="summary-subtotal">$0</strong></div>
-          <div class="summary-row"><span>Shipping</span><strong id="summary-shipping">Free</strong></div>
           <div class="summary-row summary-row--total"><span>Total</span><strong id="summary-total">$0</strong></div>
-          <div class="summary-note" id="summary-shipping-note"></div>
           <button class="btn btn-primary btn-full" id="cart-page-checkout" disabled>
             Proceed to Checkout
           </button>
@@ -150,19 +148,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const layoutEl     = document.getElementById('cart-page-layout');
   const countEl      = document.getElementById('cart-item-count');
   const subtotalEl   = document.getElementById('summary-subtotal');
-  const shippingEl   = document.getElementById('summary-shipping');
   const totalEl      = document.getElementById('summary-total');
-  const noteEl       = document.getElementById('summary-shipping-note');
   const checkoutBtn  = document.getElementById('cart-page-checkout');
   const clearBtn     = document.getElementById('clear-cart-btn');
-
-  const FREE_SHIPPING_THRESHOLD = 1200;
 
   function renderCartPage() {
     const cart     = Store.getCart();
     const subtotal = Store.totalPrice();
     const count    = Store.totalCount();
-    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : 149;
 
     if (cart.length === 0) {
       emptyEl.style.display  = 'flex';
@@ -214,18 +207,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Summary
     subtotalEl.textContent = Store.formatPrice(subtotal);
-    shippingEl.textContent = shipping === 0 ? 'Free' : Store.formatPrice(shipping);
-    totalEl.textContent    = Store.formatPrice(subtotal + shipping);
+    totalEl.textContent    = Store.formatPrice(subtotal);
     checkoutBtn.disabled   = false;
-
-    if (subtotal > 0 && subtotal < FREE_SHIPPING_THRESHOLD) {
-      const remaining = FREE_SHIPPING_THRESHOLD - subtotal;
-      noteEl.innerHTML = `<span class="shipping-progress">Add ${Store.formatPrice(remaining)} more for <strong>free shipping</strong>.</span>`;
-    } else if (subtotal >= FREE_SHIPPING_THRESHOLD) {
-      noteEl.innerHTML = `<span class="shipping-progress shipping-progress--achieved">🎉 You've unlocked free shipping!</span>`;
-    } else {
-      noteEl.innerHTML = '';
-    }
   }
 
   // Checkout stub
@@ -353,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Delayed clearing to allow form to submit
     setTimeout(() => {
+      Store.saveOrder({ ...payload, status: 'processing', paymentStatus: 'pending_sync' });
       Store.clearCart();
       window.dispatchEvent(new CustomEvent('cart:updated'));
       closeCheckoutModal();
@@ -377,8 +361,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const payload = {
       orderId: `ORD-${Date.now()}`,
       customer: { name, email, address, city },
-      items: cart.map(i => ({ id: i.id, name: i.name, finish: i.finish, size: i.size, qty: i.qty, price: i.price })),
+      items: cart.map(i => ({ id: i.id, name: i.name, finish: i.finish, size: i.size, qty: i.qty, price: i.price, image: i.image })),
       subtotal: Store.totalPrice(),
+      total: Store.totalPrice(),
       createdAt: new Date().toISOString()
     };
 
@@ -439,6 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Success
       console.log('Order response', res.status, json || text);
       showToast('✓ Order received — thank you!');
+      Store.saveOrder({ ...payload, status: 'processing', paymentStatus: 'paid' });
       Store.clearCart();
       window.dispatchEvent(new CustomEvent('cart:updated'));
       closeCheckoutModal();
